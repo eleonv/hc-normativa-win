@@ -103,7 +103,7 @@ export class MultipleselectComponent {
     onShowModalAdd() {
 
         this.datasource = this.datasource.map((item: any) => {
-            return { id: item.id, name: item.name, check: false };
+            return { id: item.id, name: item.name, check: false, subtitulo: item.subtitulo ?? '',lsubTitulo: item.lsubTitulo  };
         });
 
         this.dialog.open(BusquedaDialogComponent, { width: '950px', height: '550px', data: { registros: this.datasource } })
@@ -121,7 +121,7 @@ export class MultipleselectComponent {
 
                                 const index = _lstSeleccionados.findIndex((obj) => obj.id === x.id)
                                 if (index < 0)
-                                    this.selectedItems.update(item => [...item, { id: x.id, name: x.name, check: x.check }]);
+                                    this.selectedItems.update(item => [...item, { id: x.id, name: x.name, check: x.check, subtitulo: x.subtitulo ?? '', lsubTitulo: x.lsubTitulo }]);
                             });
                         }
 

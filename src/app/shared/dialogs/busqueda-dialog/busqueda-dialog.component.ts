@@ -13,7 +13,6 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ChipItem } from '../../../models/core/chips';
-
 @Component({
     selector: 'app-busqueda-dialog',
     standalone: true,
@@ -93,7 +92,7 @@ export class BusquedaDialogComponent {
 
     onEnviar() {
         this.dialogResult.status = this._const.DIALOG_STATUS_OK,
-        this.dialogResult.data = {selects: this.dataSelected, lTodo: this.lTodo};
+            this.dialogResult.data = { selects: this.dataSelected, lTodo: this.lTodo };
         this.dialogRef.close(this.dialogResult);
     }
     //#endregion

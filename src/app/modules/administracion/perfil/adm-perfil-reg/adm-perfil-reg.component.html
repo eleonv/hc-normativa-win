@@ -32,7 +32,7 @@
         <div class="col-12 mb-3">
             @if (accionForm!=_const.ACCION_FORM_VIEW) {
             <button type="button" mat-flat-button class="me-2" (click)="onGuardarRegistro()"
-                [disabled]="form.invalid">Guardar</button>
+                [disabled]="form.invalid || noGerencia">Guardar</button>
             }
 
             <button type="button" mat-button class="" (click)="onSalirForm()">Salir</button>

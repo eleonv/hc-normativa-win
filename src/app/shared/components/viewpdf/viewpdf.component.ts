@@ -9,7 +9,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { take } from 'rxjs';
 import { AppService } from '../../../services/core/app.service';
@@ -77,12 +77,19 @@ export class ViewpdfComponent {
         private router: Router,
         private toastr: ToastrService,
         private servService: ServService,
+        private route: ActivatedRoute,
 
     ) {
         this.perfil = AuthUtility.getPerfil();
-        this.ajustarVentana();
-        this.obtenerDatosCompartido();
+
     }
+    ngOnInit() {
+        this.route.queryParams.subscribe(params => {
+            this.ajustarVentana();
+            this.obtenerDatosCompartido();
+        });
+    }
+
 
     ngAfterViewInit() { }
 
@@ -93,6 +100,7 @@ export class ViewpdfComponent {
             .pipe(take(1), takeUntilDestroyed(this.destroyRef))
             .subscribe((data: any) => {
                 if (data == null) {
+
                     const storedData = sessionStorage.getItem('dataWindow');
                     //this.lOpenWindow = true
                     if (storedData) {

@@ -149,6 +149,65 @@
 
             <span class="dash-spacer-main"></span>
             <!-- <span style="font-size: 12px;">{{user?.cNombreCorto}}</span> -->
+            <button mat-icon-button [matMenuTriggerFor]="menuNotiNormativas" (click)="cargarNotificaciones(1)">
+                <mat-icon [matBadge]='nNotiNormativas > 0 ? nNotiNormativas:null'
+                    [svgIcon]="'mat_solid:snippet_folder'"></mat-icon>
+            </button>
+            <mat-menu #menuNotiNormativas="matMenu" xPosition="before" class="menu-notificaciones">
+                <p class="mx-2 my-1">Tienes {{nNotiNormativas}} Normativa(s) sin ver</p>
+                <mat-divider></mat-divider>
+                <div class="list-group">
+                    @for (notificacion of dataNotificaciones; track notificacion) {
+                    <button type="button" class="list-group-item list-group-item-action d-flex" style="padding: 3px;"
+                        (click)="openNormativa(notificacion, 1)">
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <mat-icon style="width: 17px; height: 17px;"
+                                [svgIcon]="'mat_solid:snippet_folder'"></mat-icon>
+                        </div>
+                        <p class="col-11" style="padding-left: 8px;">{{notificacion.cNormativa}}</p>
+                    </button>
+                    }
+                </div>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="menuNotiGuias" (click)="cargarNotificaciones(2)">
+                <mat-icon [matBadge]='nNotiGuias > 0 ? nNotiGuias:null'
+                    [svgIcon]="'mat_solid:assistant_direction'"></mat-icon>
+            </button>
+            <mat-menu #menuNotiGuias="matMenu" xPosition="before" class="menu-notificaciones">
+                <p class="mx-2 my-1">Tienes {{nNotiGuias}} Guía(s) sin ver</p>
+                <mat-divider></mat-divider>
+                <div class="list-group">
+                    @for (notificacion of dataNotificaciones; track notificacion) {
+                    <button type="button" class="list-group-item list-group-item-action d-flex" style="padding: 3px;"
+                        (click)="openNormativa(notificacion, 2)">
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <mat-icon style="width: 17px; height: 17px;"
+                                [svgIcon]="'mat_solid:assistant_direction'"></mat-icon>
+                        </div>
+                        <p class="col-11" style="padding-left: 8px;">{{notificacion.cNormativa}}</p>
+                    </button>
+                    }
+                </div>
+            </mat-menu>
+            <button mat-icon-button [matMenuTriggerFor]="menuNotiProyectos" (click)="cargarNotificaciones(3)">
+                <mat-icon [matBadge]='nNotiProyectos > 0 ? nNotiProyectos:null' [svgIcon]="'mat_solid:work'"></mat-icon>
+            </button>
+            <mat-menu #menuNotiProyectos="matMenu" xPosition="before" class="menu-notificaciones">
+                <p class="mx-2 my-1">Tienes {{nNotiProyectos}} Proyecto(s) sin ver</p>
+                <mat-divider></mat-divider>
+                <div class="list-group">
+                    @for (notificacion of dataNotificaciones; track notificacion) {
+                    <button type="button" class="list-group-item list-group-item-action d-flex" style="padding: 3px;"
+                        (click)="openNormativa(notificacion, 3)">
+                        <div class="col-1 d-flex align-items-center justify-content-center">
+                            <mat-icon style="width: 17px; height: 17px;" [svgIcon]="'mat_solid:work'"></mat-icon>
+                        </div>
+                        <p class="col-11" style="padding-left: 8px;">{{notificacion.cNormativa}}</p>
+                    </button>
+                    }
+                </div>
+            </mat-menu>
+
             <div>
                 <p class="hc-user-nombre">
                     <span>{{user?.cNombreCorto}}</span><br>

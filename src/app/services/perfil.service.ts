@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
@@ -36,8 +36,14 @@ export class PerfilService {
     }
 
     // cargos
-    listCargos(idArea: number): Observable<any> {
-        return this.http.get<any>(this.url + "lista-cargos?idArea=" + idArea);
+    listCargos(lstCargos: number[]): Observable<any> {
+        let params = new HttpParams();
+        if (lstCargos[0] != -1) {
+            for (let i = 0; i < lstCargos.length; i++) {
+                params = params.append('lstAreas', lstCargos[i]);
+            }
+        }
+        return this.http.get<any>(this.url + "lista-cargos", { params });
     }
 
     // oficinas

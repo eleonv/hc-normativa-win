@@ -1,3 +1,14 @@
 .dash-spacer-main {
     flex: 1 1 auto;
 }
+
+.menu-notificaciones {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+::ng-deep .menu-notificaciones {
+    max-height: 300px;
+    overflow-y: auto;
+    z-index: 100000;
+}

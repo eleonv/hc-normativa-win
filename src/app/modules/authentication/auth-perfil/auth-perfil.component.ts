@@ -28,7 +28,7 @@ import { CommonModule } from '@angular/common';
 @Component({
     selector: 'app-auth-perfil',
     standalone: true,
-    imports: [MatButtonModule, MatIconModule,
+    imports: [RouterOutlet, RouterLink, MatButtonModule, MatIconModule, HttpClientModule,
         //user
         MatMenuModule, MatDividerModule,
         MatCardModule, MatFormFieldModule,
@@ -58,6 +58,9 @@ export class AuthPerfilComponent {
     nombrePerfil: string | null = null;
 
     lAcceso: boolean = false
+    lPerfiles: boolean = false
+
+    mensajeError: string = ''
 
     public constructor(
         private appService: AppService,
@@ -69,7 +72,6 @@ export class AuthPerfilComponent {
         private activatedRoute: ActivatedRoute,
     ) {
         let _isChangePerfil = this.activatedRoute.snapshot.data['isChangePerfil'];
-
         ////console.log("isChangePerfil", _isChangePerfil);
 
         if (_isChangePerfil) {
@@ -80,7 +82,7 @@ export class AuthPerfilComponent {
             let _tokenabc: any = AuthUtility.getTokenIdentity();
             AuthUtility.initSessionData(_tokenabc);
 
-            this.lAcceso  = true;
+            this.lAcceso = true;
             this.getPerfiles();
         } else {
             this.nombrePerfil = null;
@@ -125,7 +127,7 @@ export class AuthPerfilComponent {
 
                         AuthUtility.setValueUserAS(_user);
                         this.user = AuthUtility.getValueUserAS();
-
+                        
                     }
                     else {
                         this.lAcceso = false
@@ -145,7 +147,11 @@ export class AuthPerfilComponent {
                 next: (response: any) => {
                     this.appService.disableLoading();
                     if (response.success == Constante.STATUS_OK) {
+                        this.lPerfiles = true
                         this.listaPerfiles = response.data;
+                    } else {
+                        this.mensajeError = response.errors[0].message
+                        this.lPerfiles = false
                     }
                 }
             });
@@ -189,24 +195,8 @@ export class AuthPerfilComponent {
                 next: (response: any) => {
                     this.appService.disableLoading();
 
-                    //AuthUtility.setPerfil(this.perfil);
-                    //this.router.navigate([Constante.URL_DASHBOARD]);
-
                     AuthUtility.setPerfil(this.perfil);
-                    let dataNormativa = AuthUtility.getDataNormativa();
-                    if (dataNormativa && dataNormativa != null) {
-                        //console.log('dataNormativa:', dataNormativa);
-
-                        let _data = {
-                            rutaOrigen: Constante.URL_USER_NORMATIVAS,
-                            normativa: dataNormativa
-                        };
-
-                        this.appService.setValueSharedData(_data);
-                        this.router.navigate([this._const.URL_PDF_VIEW]);
-                    } else {
-                        this.router.navigate([this._const.URL_DASHBOARD]);
-                    }
+                    this.router.navigate([Constante.URL_DASHBOARD]);
                 }
             });
     }

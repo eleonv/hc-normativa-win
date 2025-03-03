@@ -46,7 +46,7 @@ export class AdmPerfilRegComponent {
     form = this.fb.group({
         cNombre: ['', Validators.required],
         lImprime: [false],
-        lDescarga: [false],
+        lDescarga: [false]
     });
 
     perfilData: any = {};
@@ -57,6 +57,8 @@ export class AdmPerfilRegComponent {
     listaGerencias: any[] = []
     listaCargos: any[] = []
     nTipo: number = 1;
+
+    noGerencia: boolean = true
 
     readonly configAreasMSelect = { label: 'Gerencias', button: 'Agregar' };
     areasSeledted = signal<any[]>([]);
@@ -69,6 +71,7 @@ export class AdmPerfilRegComponent {
     disabledForm: boolean = false;
     lTodoGerencia: boolean = false;
     idAreas: number[] = [];
+    cGerencias: string[] = [];
     listadoGer: any;
     listadoCargos: any;
 
@@ -119,9 +122,9 @@ export class AdmPerfilRegComponent {
                 },
             });
     }
-    listarCargos() {
+    listarCargos(nGerencia?: number[]) {
         this.appService.activateLoading();
-        this.perfilService.listCargos(-1)
+        this.perfilService.listCargos(nGerencia ?? [-1])
             .pipe(take(1), takeUntilDestroyed(this.destroyRef))
             .subscribe({
                 next: (response: any) => {
@@ -131,9 +134,12 @@ export class AdmPerfilRegComponent {
                     if (response.success == Constante.STATUS_OK) {
                         this.listaCargos = response.data;
                         let listado = response.data;
+                        // accion = accion ?? 'N'
+                        // this.cargosRaw = accion === 'N' ? [] : this.cargosRaw;
                         this.cargosRaw = listado.map((item: any) => {
-                            return { id: item.idCargo, name: item.cCargo, check: false };
+                            return { id: item.idCargo, name: item.cCargo, check: false, subtitulo: item.cGerencia , lsubTitulo: (nGerencia ?? [-1]).length > 1 ? true : false };
                         });
+                        // this.cargosRaw = accion === 'N' ? nuevosCargos : [...this.cargosRaw, ...nuevosCargos];
                     } else {
                         this.toastr.warning(response.message, this._const.MESSAGE_TITLE_WARNING);
                     }
@@ -223,6 +229,8 @@ export class AdmPerfilRegComponent {
                 perfil.lstCargos.forEach((x: any) => {
                     this.cargosSeledted.update(item => [...item, { id: x.idCargo, name: x.cCargo, check: true }]);
                 });
+
+                this.listarCargos(this.idAreas)
                 //this.form.controls.nTipoPadre.setValue(this.perfilData.nTipoPadre);
             });
     }
@@ -263,11 +271,25 @@ export class AdmPerfilRegComponent {
     }
     onSelectedAreas($event: any) {
         let _response = $event;
-
         if (_response.status == Constante.STATUS_OK) {
+            // this.cargosSeledted = signal<any[]>([]);
+            // this.cargosRaw =  [];
             this.listadoGer = _response.data;
-
+            let cGerenciaAux = this.cGerencias
             this.idAreas = this.listadoGer.map((item: any) => item.id);
+            this.cGerencias = this.listadoGer.map((item: any) => item.name);
+            const interseccion = this.cGerencias.filter(area => cGerenciaAux.includes(area));
+
+            this.cargosSeledted.update(items => 
+                items.filter(item => interseccion.includes(item.subtitulo))
+            );
+            if (this.idAreas.length > 0) {
+                this.noGerencia = false
+                this.listarCargos(this.idAreas)
+            } else {
+                this.noGerencia = true
+                this.listarCargos()
+            }
         }
     }
 

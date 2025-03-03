@@ -152,7 +152,7 @@ export class AdmReporteRegComponent {
   listarCargosNormativas(idArea: number) {
 
     this.appService.activateLoading();
-    this.prerfilService.listCargos(0)
+    this.prerfilService.listCargos([-1])
       .pipe(take(1), takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: (response: any) => {

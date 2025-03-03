@@ -22,7 +22,7 @@
                                         <mat-label>Fecha inicio</mat-label>
                                         <input type="text" matInput maxlength="10" [matDatepicker]="pickerfi"
                                             formControlName="cFechaInicio" readonly [max]="fechaHasta">
-                                            <!-- (dateChange)="onChangeDesde()" -->
+                                        <!-- (dateChange)="onChangeDesde()" -->
                                         <!-- <mat-hint>MM/DD/YYYY</mat-hint> -->
                                         <mat-datepicker-toggle matIconSuffix [for]="pickerfi"></mat-datepicker-toggle>
                                         <mat-datepicker #pickerfi></mat-datepicker>
@@ -57,34 +57,78 @@
                 </mat-accordion>
             </form>
         </div>
+        <div *ngIf="lResultados">
+            <div class="col-12 flex mb-3">
+                <div class="col-9">
+                    <button mat-mini-fab color="primary" class="mx-3 col-3" (click)="exportExcel()">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24px" height="24px">
+                            <path
+                                d="M 14 3 L 2 5 L 2 19 L 14 21 L 14 19 L 21 19 C 21.552 19 22 18.552 22 18 L 22 6 C 22 5.448 21.552 5 21 5 L 14 5 L 14 3 z M 12 5.3613281 L 12 18.638672 L 4 17.306641 L 4 6.6933594 L 12 5.3613281 z M 14 7 L 16 7 L 16 9 L 14 9 L 14 7 z M 18 7 L 20 7 L 20 9 L 18 9 L 18 7 z M 5.1757812 8.296875 L 7.0605469 11.994141 L 5 15.703125 L 6.7363281 15.703125 L 7.859375 13.308594 C 7.934375 13.079594 7.9847656 12.908922 8.0097656 12.794922 L 8.0253906 12.794922 C 8.0663906 13.032922 8.1162031 13.202109 8.1582031 13.287109 L 9.2714844 15.701172 L 11 15.701172 L 9.0058594 11.966797 L 10.943359 8.296875 L 9.3222656 8.296875 L 8.2929688 10.494141 C 8.1929688 10.779141 8.1257969 10.998625 8.0917969 11.140625 L 8.0664062 11.140625 C 8.0084063 10.902625 7.9509531 10.692719 7.8769531 10.511719 L 6.953125 8.296875 L 5.1757812 8.296875 z M 14 11 L 16 11 L 16 13 L 14 13 L 14 11 z M 18 11 L 20 11 L 20 13 L 18 13 L 18 11 z M 14 15 L 16 15 L 16 17 L 14 17 L 14 15 z M 18 15 L 20 15 L 20 17 L 18 17 L 18 15 z" />
+                        </svg>
+                    </button>
+                    <button mat-mini-fab color="primary" class="mx-3 col-3" (click)="exportPdf()">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
+                            height="24px" viewBox="0 0 36 36" version="1.1">
+                            <g id="surface1">
+                                <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;"
+                                    d="M 31.621094 7.566406 L 31.148438 7.082031 L 24.878906 0.820312 L 24.398438 0.339844 C 24.183594 0.121094 23.882812 0 23.578125 0 L 5.558594 0 C 4.828125 0 4.035156 0.566406 4.035156 1.816406 L 4.035156 34.757812 C 4.035156 35.277344 4.558594 35.785156 5.175781 35.941406 C 5.207031 35.953125 5.238281 35.964844 5.269531 35.972656 C 5.367188 35.988281 5.464844 36 5.558594 36 L 30.441406 36 C 30.535156 36 30.632812 35.988281 30.730469 35.972656 C 30.761719 35.964844 30.792969 35.953125 30.824219 35.941406 C 31.441406 35.785156 31.964844 35.277344 31.964844 34.757812 L 31.964844 8.675781 C 31.964844 8.199219 31.910156 7.847656 31.621094 7.566406 Z M 29.753906 7.449219 L 24.515625 7.449219 L 24.515625 2.214844 Z M 5.558594 34.757812 C 5.519531 34.757812 5.480469 34.738281 5.4375 34.730469 C 5.34375 34.683594 5.273438 34.589844 5.273438 34.472656 L 5.273438 25.449219 L 30.726562 25.449219 L 30.726562 34.472656 C 30.726562 34.589844 30.65625 34.683594 30.5625 34.730469 C 30.519531 34.738281 30.480469 34.757812 30.441406 34.757812 Z M 5.273438 24.207031 L 5.273438 1.816406 C 5.273438 1.683594 5.296875 1.242188 5.558594 1.242188 L 23.316406 1.242188 C 23.292969 1.316406 23.273438 1.402344 23.273438 1.480469 L 23.273438 8.691406 L 30.480469 8.691406 C 30.5625 8.691406 30.644531 8.671875 30.722656 8.652344 C 30.722656 8.660156 30.726562 8.667969 30.726562 8.675781 L 30.726562 24.207031 Z M 5.273438 24.207031 " />
+                                <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;"
+                                    d="M 13.683594 27.773438 C 13.476562 27.605469 13.242188 27.472656 12.980469 27.394531 C 12.722656 27.304688 12.457031 27.261719 12.191406 27.261719 L 10.394531 27.261719 L 10.394531 33.515625 L 11.414062 33.515625 L 11.414062 31.261719 L 12.167969 31.261719 C 12.492188 31.261719 12.796875 31.214844 13.066406 31.113281 C 13.335938 31.019531 13.570312 30.886719 13.761719 30.707031 C 13.957031 30.535156 14.105469 30.316406 14.214844 30.058594 C 14.320312 29.800781 14.371094 29.511719 14.371094 29.199219 C 14.371094 28.898438 14.308594 28.628906 14.183594 28.386719 C 14.058594 28.148438 13.886719 27.941406 13.683594 27.773438 Z M 13.292969 29.835938 C 13.230469 30.011719 13.148438 30.144531 13.050781 30.238281 C 12.949219 30.339844 12.839844 30.402344 12.714844 30.449219 C 12.589844 30.492188 12.46875 30.515625 12.347656 30.515625 L 11.414062 30.515625 L 11.414062 28.035156 L 12.175781 28.035156 C 12.433594 28.035156 12.644531 28.078125 12.800781 28.160156 C 12.960938 28.242188 13.082031 28.339844 13.171875 28.464844 C 13.261719 28.589844 13.316406 28.710938 13.347656 28.847656 C 13.371094 28.980469 13.386719 29.097656 13.386719 29.199219 C 13.386719 29.457031 13.359375 29.667969 13.292969 29.835938 Z M 13.292969 29.835938 " />
+                                <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;"
+                                    d="M 19.832031 28.175781 C 19.570312 27.902344 19.242188 27.679688 18.839844 27.515625 C 18.441406 27.347656 17.976562 27.261719 17.457031 27.261719 L 15.566406 27.261719 L 15.566406 33.515625 L 17.933594 33.515625 C 18.019531 33.515625 18.136719 33.511719 18.300781 33.488281 C 18.464844 33.46875 18.644531 33.421875 18.84375 33.351562 C 19.042969 33.28125 19.246094 33.175781 19.457031 33.035156 C 19.667969 32.886719 19.863281 32.695312 20.035156 32.449219 C 20.203125 32.203125 20.34375 31.898438 20.457031 31.535156 C 20.558594 31.171875 20.621094 30.730469 20.621094 30.214844 C 20.621094 29.839844 20.554688 29.480469 20.425781 29.128906 C 20.292969 28.769531 20.097656 28.457031 19.832031 28.175781 Z M 19.089844 32.109375 C 18.785156 32.550781 18.285156 32.769531 17.597656 32.769531 L 16.589844 32.769531 L 16.589844 28.035156 L 17.179688 28.035156 C 17.667969 28.035156 18.066406 28.097656 18.371094 28.222656 C 18.675781 28.355469 18.917969 28.519531 19.097656 28.730469 C 19.269531 28.933594 19.394531 29.160156 19.457031 29.417969 C 19.519531 29.671875 19.546875 29.929688 19.546875 30.1875 C 19.546875 31.027344 19.394531 31.667969 19.089844 32.109375 Z M 19.089844 32.109375 " />
+                                <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;"
+                                    d="M 22.097656 33.515625 L 23.132812 33.515625 L 23.132812 30.699219 L 25.746094 30.699219 L 25.746094 30.003906 L 23.132812 30.003906 L 23.132812 28.035156 L 26.011719 28.035156 L 26.011719 27.261719 L 22.097656 27.261719 Z M 22.097656 33.515625 " />
+                                <path style=" stroke:none;fill-rule:nonzero;fill:rgb(0%,0%,0%);fill-opacity:1;"
+                                    d="M 23.855469 14.25 C 23.277344 14.25 22.582031 14.324219 21.769531 14.472656 C 20.628906 13.265625 19.449219 11.507812 18.609375 9.777344 C 19.441406 6.285156 19.027344 5.789062 18.84375 5.558594 C 18.644531 5.308594 18.371094 4.902344 18.058594 4.902344 C 17.929688 4.902344 17.574219 4.96875 17.425781 5.015625 C 17.066406 5.132812 16.875 5.410156 16.722656 5.765625 C 16.285156 6.796875 16.886719 8.542969 17.507812 9.890625 C 16.972656 12 16.089844 14.519531 15.160156 16.566406 C 12.800781 17.644531 11.554688 18.699219 11.441406 19.710938 C 11.402344 20.074219 11.484375 20.613281 12.136719 21.097656 C 12.308594 21.234375 12.515625 21.304688 12.730469 21.304688 C 13.277344 21.304688 13.824219 20.886719 14.460938 19.996094 C 14.925781 19.347656 15.421875 18.457031 15.9375 17.355469 C 17.601562 16.628906 19.660156 15.972656 21.417969 15.605469 C 22.402344 16.546875 23.277344 17.019531 24.027344 17.019531 C 24.585938 17.019531 25.066406 16.769531 25.410156 16.285156 C 25.769531 15.777344 25.851562 15.328125 25.652344 14.941406 C 25.410156 14.480469 24.824219 14.25 23.855469 14.25 Z M 12.746094 20.253906 C 12.457031 20.035156 12.472656 19.878906 12.480469 19.828125 C 12.515625 19.480469 13.058594 18.867188 14.386719 18.121094 C 13.378906 19.980469 12.839844 20.226562 12.746094 20.253906 Z M 17.835938 6.027344 C 17.863281 6.019531 18.488281 6.707031 17.894531 8.019531 C 17.011719 7.121094 17.777344 6.046875 17.835938 6.027344 Z M 16.550781 15.972656 C 17.183594 14.472656 17.769531 12.816406 18.210938 11.277344 C 18.910156 12.535156 19.746094 13.746094 20.582031 14.71875 C 19.261719 15.035156 17.847656 15.46875 16.550781 15.972656 Z M 24.5625 15.679688 C 24.371094 15.941406 23.953125 15.949219 23.8125 15.949219 C 23.480469 15.949219 23.355469 15.753906 22.851562 15.363281 C 23.269531 15.308594 23.660156 15.300781 23.972656 15.300781 C 24.527344 15.300781 24.628906 15.378906 24.703125 15.421875 C 24.691406 15.464844 24.652344 15.550781 24.5625 15.679688 Z M 24.5625 15.679688 " />
+                            </g>
+                        </svg>
+                    </button>
+                    <mat-form-field class="mx-3 col-4 w-full">
+                        <mat-label>Filtrar columnas</mat-label>
+                        <mat-select [formControl]="filtros" multiple (selectionChange)="filterChange()">
+                            @for (filtro of filtroLista; track filtro) {
+                            <mat-option [value]="filtro.colName">{{filtro.name}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <div class="col-3">
+                    <mat-form-field class="w-full">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput (keyup)="filtrarData($event)" placeholder="Buscar..." #input>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
         <div class="table-body table-responsive">
-            <table mat-table [dataSource]="listData" class="table-full-width hc-table">
+            <table mat-table [dataSource]="dataSource" matSort class="table-full-width hc-table">
                 <ng-container matColumnDef="cDNI">
-                    <th mat-header-cell *matHeaderCellDef style="width: 50px;" class="text-center"> DNI </th>
+                    <th mat-header-cell *matHeaderCellDef style="width: 50px;" class="text-center" mat-sort-header> DNI
+                    </th>
                     <td mat-cell *matCellDef="let element" class="text-center"> {{element.cDNI}} </td>
                 </ng-container>
                 <ng-container matColumnDef="cNombreCompleto">
-                    <th mat-header-cell *matHeaderCellDef> Nombres y apellidos</th>
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombres y apellidos</th>
                     <td mat-cell *matCellDef="let element"> {{element.cNombreCompleto}} </td>
                 </ng-container>
                 <ng-container matColumnDef="cPerfil">
-                    <th mat-header-cell *matHeaderCellDef class="text-center"> Cargo</th>
+                    <th mat-header-cell *matHeaderCellDef class="text-center" mat-sort-header> Cargo</th>
                     <td mat-cell *matCellDef="let element" class="text-center"> {{element.cPerfil}} </td>
                 </ng-container>
                 <ng-container matColumnDef="cFechaRegistro">
-                    <th mat-header-cell *matHeaderCellDef class="text-center"> Última Fecha ingreso</th>
+                    <th mat-header-cell *matHeaderCellDef class="text-center" mat-sort-header> Última Fecha ingreso</th>
                     <td mat-cell *matCellDef="let element" class="text-center"> {{element.cFechaRegistro}} </td>
                 </ng-container>
                 <ng-container matColumnDef="cArea">
-                    <th mat-header-cell *matHeaderCellDef class="text-center"> Gerencia</th>
+                    <th mat-header-cell *matHeaderCellDef class="text-center" mat-sort-header> Gerencia</th>
                     <td mat-cell *matCellDef="let element" class="text-center"> {{element.cArea}} </td>
                 </ng-container>
                 <ng-container matColumnDef="cAgencia">
-                    <th mat-header-cell *matHeaderCellDef class="text-center"> Oficina</th>
+                    <th mat-header-cell *matHeaderCellDef class="text-center" mat-sort-header> Oficina</th>
                     <td mat-cell *matCellDef="let element" class="text-center"> {{element.cAgencia}} </td>
                 </ng-container>
                 <ng-container matColumnDef="nCantidadIngresos">
-                    <th mat-header-cell *matHeaderCellDef class="text-center"> Cantidad ingresos</th>
+                    <th mat-header-cell *matHeaderCellDef class="text-center" mat-sort-header> Cantidad ingresos</th>
                     <td mat-cell *matCellDef="let element" class="text-center"> {{element.nCantidadIngresos}} </td>
                 </ng-container>
 

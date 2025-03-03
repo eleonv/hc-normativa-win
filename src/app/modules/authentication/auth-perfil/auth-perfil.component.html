@@ -40,9 +40,9 @@
             </div>
         </div>
 
-        <div class="hc-form d-flex justify-content-center" >
+        <div class="hc-form d-flex justify-content-center">
 
-            <mat-card class="hc-mat-card" appearance="outlined" *ngIf="lAcceso">
+            <mat-card class="hc-mat-card" appearance="outlined" *ngIf="lAcceso && lPerfiles">
                 <!-- <mat-card-content>Simple card</mat-card-content> -->
 
                 <div class="row">
@@ -66,7 +66,10 @@
                     </div>
                 </div>
             </mat-card>
-
+            <p *ngIf="!lPerfiles">
+                {{mensajeError}}
+            </p>
+            <br>
             <p *ngIf="!lAcceso">
                 Seras redirigido a AndesSuite, gracias.
             </p>

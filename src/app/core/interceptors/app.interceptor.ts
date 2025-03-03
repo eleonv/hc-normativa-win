@@ -6,7 +6,6 @@ import { AppService } from '../../services/core/app.service';
 import { catchError, finalize, throwError } from 'rxjs';
 import { ToastrService } from 'ngx-toastr';
 import { Constante } from '../../utility/constante';
-import { Router } from '@angular/router';
 
 export const appInterceptor: HttpInterceptorFn = (request, next) => {
 
@@ -22,7 +21,6 @@ export const appInterceptor: HttpInterceptorFn = (request, next) => {
     // error control
     const appService = inject(AppService);
     const toastr = inject(ToastrService);
-    const router = inject(Router);
     const _const = Constante;
 
     //return next(customRequest);
@@ -38,8 +36,7 @@ export const appInterceptor: HttpInterceptorFn = (request, next) => {
 
             if (error.status == 401) {
                 toastr.error("Su sesión ha cadudado", _const.MESSAGE_TITLE_INFO);
-                //appService.goAndesSuiteLogin();
-                router.navigate(['/login']);
+                appService.goAndesSuiteLogin();
             }
 
             return throwError(() => new Error(error));

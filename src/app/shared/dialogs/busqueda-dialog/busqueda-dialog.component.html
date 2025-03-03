@@ -20,7 +20,15 @@
             <!-- <th mat-header-cell *matHeaderCellDef style="display: none;"></th> -->
             <td mat-cell *matCellDef="let element">
                 <mat-checkbox [ngModel]="element.check" (change)="onCheckboxChangeOneSelect($event, element)">
-                    {{element.name}}
+                    <ng-container *ngIf="element.lsubTitulo; else noSubtitle">
+                        <div class="checkbox-text">
+                            <span class="title">{{element.name}}</span>
+                            <span class="subtitle">{{element.subtitulo}}</span>
+                        </div>
+                    </ng-container>
+                    <ng-template #noSubtitle>
+                        {{element.name}}
+                    </ng-template>
                 </mat-checkbox>
             </td>
         </ng-container>
